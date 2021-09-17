@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    body
+    {
+        font-family: Arial, Tahoma, San-Serif;
+        font-size: 11px;
+    }
+    p
+    {
+        margin: 0 0 20px;
+    }
+    ul.mainlist
+    {
+        float: left;
+        margin: 0 20px 0 0;
+        width: 100px;
+    }
+    ul.mainlist li
+    {
+        background: #fff;
+        border: solid 1px #ccc;
+        padding: 10px;
+    }
+</style>
+<body>
+<p>sublists shouldn't be able to be dragged out of their normal list</p>
+<ul id="list1" class='mainlist'>
+    <li>One (a)</li>
+    <li>Two (a)</li>
+    <li class="hasItems">Three (a)
+        <ul class="sublist">
+            <li>subitem1-1</li>
+            <li>subitem1-2</li>
+            <li>subitem1-3</li>
+            <li>subitem1-4</li>
+        </ul>
+    </li>
+    <li>Four (a)</li>
+    <li class="hasItems">Five (a)
+        <ul class="sublist">
+            <li>subitem2-1</li>
+            <li>subitem2-2</li>
+            <li>subitem2-3</li>
+            <li>subitem2-4</li>
+        </ul>
+    </li>
+</ul>
+<ul id="list2" class='mainlist'>
+    <li>1</li>
+    <li>Two (b)</li>
+    <li>Three (b)</li>
+</ul>
+<script>
+    $(function() {
+        $('ul.mainlist').sortable({
+            connectWith: 'ul.mainlist',
+            beforeStop: function(ev, ui) {
+                if ($(ui.item).hasClass('hasItems') && $(ui.placeholder).parent()[0] != this) {
+                    $(this).sortable('cancel');
+                }
+            }
+        });
+        $('ul.sublist').sortable({
+            connectWith: 'ul.sublist'
+        });
+    });
+</script>
+</body>
+</html>
